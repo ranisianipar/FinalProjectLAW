@@ -1,0 +1,11 @@
+.form-group {
+    max-width: 480px;
+}
+
+.btn {
+    min-width: 10em;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}

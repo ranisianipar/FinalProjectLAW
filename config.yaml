@@ -1,0 +1,27 @@
+app_name: TugasAkhirLaw
+port: 5001
+env:
+  - production
+  - development
+
+rabbitmq:
+  production:
+    user: '0806444524'
+    pass: '0806444524'
+    vhost: '/0806444524'
+    host: '152.118.148.95'
+    port: '5672'
+  development:
+    user: 'guest'
+    pass: 'guest'
+    vhost: '/'
+    host: 'localhost'
+  port: '5672'
+  websocket:
+    port: '15674'
+topic:
+  compress: 'info.compress'
+  download: 'info.download'
+  timer: 'log.timer'
+  file_upload: 'info.fileupload'
+  chunk_upload: 'info.chunkupload'

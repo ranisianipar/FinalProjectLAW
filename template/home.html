@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Tugas Akhir - LAW</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <section class="container">
+            <h3>Downloader</h3>
+            <form class="my-form" action="{{ url_for('download') }}" method="post">
+                <div class='form-group'>
+                    <label for="{{ file_id_1 }}">File 1</label>
+                    <input class="form-control" id="{{ file_id_1 }}" type="text" name="{{ file_id_1 }}">
+                </div>
+    
+                <div class='form-group'>
+                    <label for="{{ file_id_2 }}">File 2</label>
+                    <input class="form-control" id="{{ file_id_2 }}" type="text" name="{{ file_id_2 }}">
+                </div>
+    
+                <div class='form-group'>
+                    <label for="{{ file_id_3 }}">File 3</label>
+                    <input class="form-control" id="{{ file_id_3 }}" type="text" name="{{ file_id_3 }}">
+                </div>
+    
+                <div class='form-group'>
+                    <label for="{{ file_id_4 }}">File 4</label>
+                    <input class="form-control" id="{{ file_id_4 }}" type="text" name="{{ file_id_4 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_5 }}">File 5</label>
+                    <input class="form-control" id="{{ file_id_5 }}" type="text" name="{{ file_id_5 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_6 }}">File 6</label>
+                    <input class="form-control" id="{{ file_id_6 }}" type="text" name="{{ file_id_6 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_7 }}">File 7</label>
+                    <input class="form-control" id="{{ file_id_7 }}" type="text" name="{{ file_id_7 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_8 }}">File 8</label>
+                    <input class="form-control" id="{{ file_id_8 }}" type="text" name="{{ file_id_8 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_9 }}">File 9</label>
+                    <input class="form-control" id="{{ file_id_9 }}" type="text" name="{{ file_id_9 }}">
+                </div>
+                <div class='form-group'>
+                    <label for="{{ file_id_10 }}">File 10</label>
+                    <input class="form-control" id="{{ file_id_10 }}" type="text" name="{{ file_id_10 }}">
+                </div>
+                
+                <input class="btn btn-dark" type="submit" value="submit" />
+            </form>
+        </section>
+        
+        
+    </body>
+</html>

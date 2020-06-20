@@ -1,0 +1,173 @@
+<html>
+    <head>
+        <title>Download</title>
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+        <script>
+            window.onload = function() {
+                
+                /* RabbitMQ & WebSocket */
+                var rabbitmq_host = "{{ rabbitmq_host }}";
+                var rabbitmq_user = "{{ rabbitmq_user }}";
+                var rabbitmq_pass = "{{ rabbitmq_password }}";
+                var websocket_url = "{{ websocket_url }}";
+
+                /* TOPIC */
+                var topic_compress = "{{ topic_compress }}"
+                var topic_download = "{{ topic_download }}";
+                var topic_timer = "{{ topic_timer }}";
+                console.log('TOPICS', topic_download, topic_timer, topic_compress);
+
+                var ws = new SockJS(websocket_url);
+                var client = Stomp.over(ws);
+
+                /* CALLBACK */
+                var on_receive_timer = function(message) {
+                    console.log('Timer message received! Message:', message);
+                    message.ack();
+                    var payload = JSON.parse(message['body'])
+                    var time = payload['time']
+                    document.getElementById("time").innerHTML = time;
+                };
+
+                var on_receive_topic_download = function(message) {
+                    console.log('Download message received! Message:', message);
+                    message.ack();
+                    var payload = JSON.parse(message['body'])
+                    var file_id = payload['file_id']
+                    var progress = payload['progress']
+                    var status = payload['status']
+                    document.getElementById("download_" + file_id).innerHTML = progress;
+                };
+
+                var on_receive_topic_compress = function(message) {
+                    console.log('Compression message received! Message:', message);
+                    message.ack();
+                    var payload = JSON.parse(message['body'])
+                    var file_id = payload['file_id']
+                    var progress = payload['progress']
+                    var status = payload['status']
+                    var download_link = payload['link']
+
+                    if (progress != null) {
+                      document.getElementById("compression_" + file_id).innerHTML = progress;
+                    }
+                    else if (download_link != null) {
+                      document.getElementById("link").innerHTML = '<a href=' + download_link + '>download here!</a>';
+                    }
+                };                
+
+                var on_connect = function() {
+                    console.log('Yes, connected!');
+                    client.subscribe(topic_timer, on_receive_timer, {'ack': 'client'});
+                    client.subscribe(topic_download, on_receive_topic_download, {'ack': 'client'});
+                    client.subscribe(topic_compress, on_receive_topic_compress, {'ack': 'client'});
+                };
+
+                var on_error =  function() {
+                    console.log('error');
+                };
+
+                client.connect(rabbitmq_user, rabbitmq_pass, on_connect, on_error, rabbitmq_host);
+            }
+        </script>
+    </head>
+
+    <body class="container">
+      <div class="mt-20">
+        <p>Current time: <span id="time">--:--:--</span></p>
+      </div>
+
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">No.</th>
+            <th scope="col">URL</th>
+            <th scope="col">Download</th>
+            <th scope="col">Compression</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{ url_1 }}</td>
+            <td><span id="download_{{ file_id_1 }}">--</span></td>
+            <td><span id="compression_{{ file_id_1 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">2</th>
+            <td>{{ url_2 }}</td>
+            <td><span id="download_{{ file_id_2 }}">--</span></td>
+            <td><span id="compression_{{ file_id_2 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">3</th>
+            <td>{{ url_3 }}</td>
+            <td><span id="download_{{ file_id_3 }}">--</span></td>
+            <td><span id="compression_{{ file_id_3 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">4</th>
+            <td>{{ url_4 }}</td>
+            <td><span id="download_{{ file_id_4 }}">--</span></td>
+            <td><span id="compression_{{ file_id_4 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">5</th>
+            <td>{{ url_5 }}</td>
+            <td><span id="download_{{ file_id_5 }}">--</span></td>
+            <td><span id="compression_{{ file_id_5 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">6</th>
+            <td>{{ url_6 }}</td>
+            <td><span id="download_{{ file_id_6 }}">--</span></td>
+            <td><span id="compression_{{ file_id_6 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">7</th>
+            <td>{{ url_7 }}</td>
+            <td><span id="download_{{ file_id_7 }}">--</span></td>
+            <td><span id="compression_{{ file_id_7 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">8</th>
+            <td>{{ url_8 }}</td>
+            <td><span id="download_{{ file_id_8 }}">--</span></td>
+            <td><span id="compression_{{ file_id_8 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">9</th>
+            <td>{{ url_9 }}</td>
+            <td><span id="download_{{ file_id_9 }}">--</span></td>
+            <td><span id="compression_{{ file_id_9 }}">--</span></td>
+          </tr>
+
+          <tr>
+            <th scope="row">10</th>
+            <td>{{ url_10 }}</td>
+            <td><span id="download_{{ file_id_10 }}">--</span></td>
+            <td><span id="compression_{{ file_id_10 }}">--</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="mt-20">
+        <p id="link">---</p>
+      </div>
+        
+    </body>
+</html>
